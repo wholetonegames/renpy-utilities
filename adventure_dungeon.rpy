@@ -1,26 +1,6 @@
-## This file adds pseudo-3D dungeon crawling function into adventurer framework.
-## This framework requires adventure.rpy, tilemap.rpy, and adventure_tilemap.rpy.
-## To play the sample game, download the dungeon folder then place it in the game directory.
-## To show sample dungeon correctly, set screen size 800x600.
-## adventure に疑似３Dダンジョン探索機能を追加するファイルです。
-## adventure.rpy, tilemap.rpy, adventure_tilemap.rpy が必要になります。
-## サンプルを実行するには dungeon フォルダーの画像をダウンロードして game ディレクトリに配置する必要があります。
-## サンプルを正しく表示するには、スクリーンサイズを 800x600 に設定する必要があります。
-
 ##############################################################################
-## How to Use
+## Definitions
 ##############################################################################
-
-## まず最初に画像の種類を文字列のリストで定義します。
-## 文字列は表示する画像ファイルの接頭辞になります
-## リストの一番最初はどのレイヤーでも共通で表示する背景画像になります。
-
-define dungeonset = ["base", "floor", "wall", "door"]
-
-## 次にダンジョンに表示する壁などの画像の数や重なりを2次元配列で定義します。
-## この例では、一番遠くに９つ、一番近くに３つの画像を表示できるようにしています。
-## c0をプレイヤーがいる位置と思って、上が画面の奥になるようイメージしてください。
-## 文字列は表示する画像ファイルの接尾辞になります
 
 define dungeon_layers = [
    ["llll6", "lll6", "ll6", "l6", "c6", "r6", "rr6", "rrr6", "rrrr6"],
@@ -32,16 +12,7 @@ define dungeon_layers = [
                             ["l0","c0","r0"],
     ]
 
-## 上で定義した接頭辞と接尾辞の組み合わせで作る画像を用意します。
-## "floor_lll6.png" など
-## 背景画像のみ最初で定義したリストの一番目と同じ名前にします。
-## "base.png"
-
-
-## 描画したいマップを整数の二次元配列で表現します。
-## 配列の値は上で定義したリストのインデックスで
-## dungeonset = ["dungeonbase", "floor", ...] の場合 1 は floor を表します。
-## 0 や空集合の場合は描画せず、後ろの背景画像が見えるようになります。
+define dungeonset = ["base", "floor", "wall", "door"]
 
 define map2 =[
 [2,3,2,2,2,2,2,2],
@@ -62,29 +33,17 @@ define map2 =[
 [2,2,2,2,2,2,2,2]
 ]
 
-## 侵入できないタイルの種類のリストも作成しておきます。
 define collision = (0, 2, 3)
 
-## ダンジョンの画像を LayeredMap(map, tileset, layers, imagefolder, filetype, mirror) で定義します。
-## map, tileset, layers は上で定義したもので、imagefolder は画像のあるパス、filetype は拡張子です。
-## mirror を "left" か "right" にすると、指定した側の画像を反対側の画像を反転して描画します。
 define dungeon_image = LayeredMap(map2, dungeonset, layers=dungeon_layers, imagefolder="dungeon", mirror = "left")
 
-## さらに ミニマップとして使うタイルマップを用意します。
 define mm_tileset = [Solid("#000", xysize=(16,16)), Solid("#633", xysize=(16,16)), Solid("#ea3", xysize=(16,16)), Solid("#f33", xysize=(16,16))]
 
 define minimap = Tilemap(map2, mm_tileset, 16)
 
-## それらを使ってレベルを Dungeon(image, music, tilemap, collision) で定義します。
 define level.dungeon = Dungeon(image=dungeon_image, tilemap = minimap, collision=collision)
 
-
-## 最後に冒険者を DungeonPlayer クラスで定義します。
-## ダンジョンの pos は (x,y,dx,dy) の組で、dx が 1 ならみぎ、-1 ならひだりを向きます。
-## adventure.rpy との定義の重複を避けるため別名にしていますが、
-## ゲームスタート後は player に戻して使います。
-
-default dungeonplayer = DungeonPlayer("dungeon", pos=(1,1,0,1), turn=0, icon = Text("P"))
+default dungeonplayer = DungeonPlayer("dungeon", pos=(1,1,0,1), turn=0, icon = Text("º"))
 
 
 ## ダンジョンのイベントを定義します。
@@ -174,11 +133,6 @@ label sprite:
 
 
 ## start ラベルから adventure_dungeon へジャンプすると探索を開始します。
-
-
-##############################################################################
-## Definitions
-##############################################################################
 
 ##############################################################################
 ## Main label

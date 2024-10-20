@@ -186,7 +186,7 @@ screen inventory(inv, buyer=None, title="Inventory"):
 
                     textbutton "[obj.name] x[score] ([price])":
                         selected inv.selected == name
-                        tooltip obj.info
+                        # tooltip obj.info
 
                         # Sell/buy mode
                         if buyer:

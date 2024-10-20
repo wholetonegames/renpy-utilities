@@ -1,10 +1,7 @@
-# Renpy Utilities (for 6.99.x)
-
-This repository is made for Ren'Py version 6.99.x.
+# Renpy Utilities
 
 This repository has files that is useful for Ren'Py.
 All files in this repository are in the public domain.
-
 
 このリポジトリは Ren'Py に有用な様々なファイルをアップロードしています。
 基本的に一覧の下に行くほど複雑で上級者向けになります。
